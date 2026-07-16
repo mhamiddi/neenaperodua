@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perodua QV-E | Power What's Next</title>
+<meta name="description" content="Malaysia's First Homegrown EV. 445km range, 150kW power, 0-100 in 7.5s. Book your Perodua QV-E today.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple: #4630B2;
+  --purple-light: #9688DA;
+  --purple-bright: #7F6BE1;
+  --purple-dark: #3A2981;
+  --purple-card: #323260;
+  --green-accent: #88B542;
+  --dark: #000;
+  --dark-2: #1D1D1D;
+  --text: #fff;
+  --text-muted: rgba(255,255,255,0.7);
+  --text-dim: rgba(255,255,255,0.5);
+  --card-bg: rgba(255,255,255,0.05);
+  --card-border: rgba(255,255,255,0.08);
+  --max: 1200px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Montserrat',Arial,sans-serif;background:var(--dark);color:var(--text);line-height:1.5;overflow-x:hidden}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;transition:background .3s}
+.nav.scrolled{background:rgba(0,0,0,.92);backdrop-filter:blur(20px)}
+.nav-logo{display:flex;align-items:center;gap:16px}
+.nav-logo img.perodua-logo{height:28px}
+.nav-logo img.qve-logo{height:22px}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{color:var(--text);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:.5px;transition:color .2s;text-transform:uppercase}
+.nav-links a:hover{color:var(--purple-light)}
+.nav-cta{background:var(--purple);color:#fff;border:none;padding:10px 24px;border-radius:4px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:background .2s}
+.nav-cta:hover{background:var(--purple-bright)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;background:none;border:none;padding:8px}
+.hamburger span{display:block;width:24px;height:2px;background:#fff;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-menu{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:999;display:none;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+.mobile-menu.active{display:flex}
+.mobile-menu a{color:#fff;font-size:18px;font-weight:600;text-decoration:none;text-transform:uppercase;letter-spacing:1px}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--dark)}
+.hero-bg{position:absolute;inset:0;width:120%;height:120%;object-fit:cover;object-position:center;opacity:.9;transform:scale(1.05)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,.2) 50%,rgba(0,0,0,.6) 100%)}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:800px;padding:0 20px;margin-top:40px}
+.hero-tag{font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--purple-light);margin-bottom:16px}
+.hero-title{font-size:clamp(32px,6vw,56px);font-weight:800;line-height:1.05;margin-bottom:8px}
+.hero-title span{color:var(--purple-light)}
+.hero-sub{font-size:clamp(16px,2.5vw,22px);font-weight:500;color:var(--text-muted);margin-bottom:40px}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--purple);color:#fff;border:none;padding:16px 36px;border-radius:6px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:all .3s;text-decoration:none;display:inline-block}
+.btn-primary:hover{background:var(--purple-bright);transform:translateY(-2px)}
+.btn-outline-white{border:1.5px solid rgba(255,255,255,.3);color:#fff;background:transparent;padding:16px 36px;border-radius:6px;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:.3px;transition:all .3s;text-decoration:none;display:inline-block}
+.btn-outline-white:hover{background:rgba(255,255,255,.1);border-color:#fff}
+.scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bounce 2s infinite;cursor:pointer}
+.scroll-indicator span{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-10px)}}
+
+/* POWER STATS */
+.power-stats{padding:80px 20px;background:var(--dark)}
+.power-stats-inner{max-width:var(--max);margin:0 auto}
+.power-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:40px}
+.stat-card{text-align:center;padding:32px 16px;border:1px solid var(--card-border);border-radius:12px;background:var(--card-bg);transition:border-color .3s}
+.stat-card:hover{border-color:var(--purple-light)}
+.stat-card img{width:40px;height:auto;margin-bottom:16px;filter:brightness(0) invert(1)}
+.stat-value{font-size:28px;font-weight:800;margin-bottom:4px}
+.stat-label{font-size:13px;color:var(--text-muted);font-weight:500}
+.stat-note{font-size:11px;color:var(--text-dim);margin-top:20px;text-align:center}
+
+/* SECTION TITLE */
+.section-label{display:block;text-align:center;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--purple-light);margin-bottom:16px}
+.section-img-title{display:block;margin:0 auto 16px;max-width:500px;width:80%}
+
+/* EXTERIOR/INTERIOR */
+.showcase{padding:80px 20px;background:var(--dark)}
+.showcase-inner{max-width:var(--max);margin:0 auto;text-align:center}
+.showcase-tabs{display:inline-flex;gap:0;margin-bottom:40px;border:1px solid rgba(255,255,255,.15);border-radius:30px;overflow:hidden}
+.showcase-tab{padding:12px 32px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--text-muted);transition:all .3s}
+.showcase-tab.active{background:var(--purple);color:#fff}
+.showcase-car-wrap{position:relative;max-width:900px;margin:0 auto}
+.showcase-car-wrap img{width:100%;height:auto}
+.color-options{display:flex;gap:12px;justify-content:center;margin-top:24px}
+.color-btn{padding:8px 24px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .3s}
+.color-btn.active{border-color:var(--purple);background:var(--purple)}
+.color-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.dot-blue{background:#72B7D9}
+.dot-grey{background:#6B6B6B}
+
+/* BOLD PRESENCE */
+.bold{padding:80px 20px;background:linear-gradient(180deg,#000 0%,#0a0a14 100%)}
+.bold-inner{max-width:var(--max);margin:0 auto;text-align:center}
+.bold-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px;text-align:left}
+.bold-item{position:relative;border-radius:16px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border)}
+.bold-item img{width:100%;height:auto;display:block}
+.bold-item-content{padding:20px 24px}
+.bold-item-content h3{font-size:18px;font-weight:700;margin-bottom:6px}
+.bold-item-content p{font-size:13px;color:var(--text-muted)}
+
+/* INTUITIVE */
+.intuitive{padding:80px 20px;background:var(--dark)}
+.intuitive-inner{max-width:var(--max);margin:0 auto;text-align:center}
+.intuitive-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px;text-align:left}
+.intuitive-card{position:relative;border-radius:16px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border)}
+.intuitive-card img{width:100%;height:auto;display:block}
+.intuitive-card-content{padding:16px 20px}
+.intuitive-card-content h4{font-size:15px;font-weight:700;margin-bottom:4px}
+.intuitive-card-content p{font-size:12px;color:var(--text-muted)}
+.intuitive-bottom{display:flex;align-items:center;justify-content:center;gap:32px;margin-top:40px;padding:40px;background:var(--card-bg);border-radius:16px;border:1px solid var(--card-border);flex-wrap:wrap}
+.intuitive-bottom img{max-width:200px;height:auto}
+.intuitive-bottom div{text-align:left}
+.intuitive-bottom h3{font-size:20px;font-weight:700;margin-bottom:8px}
+.intuitive-bottom p{font-size:14px;color:var(--text-muted);margin-bottom:16px}
+.app-btns{display:flex;gap:12px}
+
+/* PROTECTION */
+.protection{padding:80px 20px;background:linear-gradient(180deg,#0a0a14 0%,#000 100%)}
+.protection-inner{max-width:var(--max);margin:0 auto;text-align:center}
+.protection-subtitle{font-size:clamp(18px,3vw,26px);font-weight:600;max-width:700px;margin:0 auto 40px;color:var(--text-muted)}
+.protection-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px}
+.protection-feature{border-radius:16px;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border)}
+.protection-feature img{width:100%;height:auto;display:block}
+.protection-feature figcaption{padding:12px 20px;font-size:14px;font-weight:600}
+.safety-icons{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:40px}
+.safety-item{text-align:center}
+.safety-item .safety-icon{width:64px;height:64px;border-radius:50%;background:var(--card-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:24px;font-weight:800;border:1px solid var(--card-border)}
+.safety-item span{display:block;font-size:12px;font-weight:600;letter-spacing:1px}
+
+/* AFTER SALES */
+.after-sales{padding:80px 20px;background:var(--purple-dark)}
+.after-sales-inner{max-width:var(--max);margin:0 auto;text-align:center}
+.after-sales h2{font-size:clamp(28px,4vw,40px);font-weight:800;margin-bottom:16px}
+.after-sales p{font-size:16px;color:rgba(255,255,255,.8);margin-bottom:40px}
+.after-sales-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.after-sales-card{padding:32px 24px;background:rgba(255,255,255,.08);border-radius:12px;text-align:center}
+.after-sales-card h4{font-size:18px;font-weight:700;margin-bottom:8px}
+.after-sales-card p{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:0}
+
+/* CTA */
+.cta{padding:80px 20px;text-align:center;background:linear-gradient(180deg,var(--purple-bright),var(--purple))}
+.cta h2{font-size:clamp(24px,4vw,38px);font-weight:800;margin-bottom:24px;max-width:600px;margin-left:auto;margin-right:auto}
+.cta .btn-outline-white{font-size:16px;padding:18px 48px}
+
+/* PRICING */
+.pricing{padding:80px 20px;background:var(--dark)}
+.pricing-inner{max-width:900px;margin:0 auto}
+.pricing h2{font-size:clamp(24px,4vw,36px);font-weight:800;text-align:center;margin-bottom:8px}
+.pricing-sub{text-align:center;color:var(--text-muted);font-size:14px;margin-bottom:40px}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.pricing-card{padding:40px 32px;border-radius:16px;border:1px solid var(--card-border);text-align:center;background:var(--card-bg);transition:border-color .3s}
+.pricing-card.featured{border-color:var(--purple);background:linear-gradient(180deg,rgba(70,48,178,.15),rgba(70,48,178,.05));position:relative}
+.pricing-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--green-accent);color:#000;padding:4px 16px;border-radius:12px;font-size:11px;font-weight:700}
+.pricing-card h3{font-size:20px;font-weight:700;margin-bottom:4px}
+.pricing-card .price{font-size:42px;font-weight:800;margin:16px 0 4px}
+.pricing-card .price small{font-size:16px;font-weight:400}
+.pricing-card .price-label{font-size:13px;color:var(--text-muted);margin-bottom:20px}
+.pricing-card ul{list-style:none;text-align:left;margin-bottom:24px}
+.pricing-card ul li{font-size:13px;color:var(--text-muted);padding:6px 0;display:flex;align-items:center;gap:8px}
+.pricing-card ul li::before{content:'✓';color:var(--green-accent);font-weight:700}
+.pricing-card.featured ul li::before{content:'✓';color:#fff}
+
+/* FOOTER */
+.footer{padding:40px 20px;background:#111;text-align:center;border-top:1px solid rgba(255,255,255,.06)}
+.footer p{font-size:11px;color:var(--text-dim);margin-bottom:8px}
+.footer a{color:var(--text-muted);text-decoration:none;font-size:11px;margin:0 12px}
+.footer a:hover{color:#fff}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav{padding:16px 20px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .hero{min-height:80vh}
+  .hero-bg{object-fit:contain;object-position:center 30%}
+  .power-stats-grid{grid-template-columns:1fr 1fr}
+  .bold-grid,.intuitive-grid,.protection-grid,.pricing-grid,.after-sales-grid{grid-template-columns:1fr}
+  .showcase-tab{padding:10px 20px;font-size:12px}
+  .pricing-card .price{font-size:32px}
+}
+@media(max-width:480px){
+  .power-stats-grid{grid-template-columns:1fr}
+  .hero-btns{flex-direction:column;align-items:center}
+  .color-options{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">
+    <img src="images/qve-site/image_57-CzZivvHc.png" alt="QV-E" class="qve-logo">
+  </div>
+  <div class="nav-links">
+    <a href="#hero">QV-E</a>
+    <a href="#power">Performance</a>
+    <a href="#showcase">Design</a>
+    <a href="#protection">Safety</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">BOOK NOW</button>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#hero" onclick="toggleMenu()">QV-E</a>
+  <a href="#power" onclick="toggleMenu()">Performance</a>
+  <a href="#showcase" onclick="toggleMenu()">Design</a>
+  <a href="#protection" onclick="toggleMenu()">Safety</a>
+  <a href="#pricing" onclick="toggleMenu()">Pricing</a>
+  <a href="#cta" onclick="toggleMenu()">Book Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <img src="images/qve-site/car_colour_ice_blue_1_5x-Byb2kUFS.webp" alt="Perodua QV-E" class="hero-bg">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Malaysia's First Homegrown EV</div>
+    <h1 class="hero-title">Power<br>What's <span>Next</span></h1>
+    <p class="hero-sub">The all-electric QV-E. Bold design. Electrifying performance.</p>
+    <div class="hero-btns">
+      <a href="#pricing" class="btn-primary">View Pricing</a>
+      <a href="#cta" class="btn-outline-white">Book Now</a>
+    </div>
+  </div>
+  <div class="scroll-indicator" onclick="document.getElementById('power').scrollIntoView({behavior:'smooth'})">
+    <span>Scroll</span>
+    <svg width="30" height="43" viewBox="0 0 30 43"><path d="M15 42.857C18.978 42.857 22.794 41.277 25.607 38.464C28.42 35.651 30 31.835 30 27.857V15C30 11.022 28.42 7.206 25.607 4.393C22.794 1.58 18.978 0 15 0C11.022 0 7.206 1.58 4.393 4.393C1.58 7.206 0 11.022 0 15v12.857c0 3.978 1.58 7.794 4.393 10.607C7.206 41.277 11.022 42.857 15 42.857Z" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/><path d="M13.928 20.893h.097l.214.225a.9.9 0 001.522 0l.214-.225h.097v-.097l6.117-6.107-1.521-1.521-4.597 4.607V6.43h-2.142v11.345L9.332 13.168l-1.521 1.521 6.117 6.107v.097z" fill="rgba(255,255,255,0.6)"/></svg>
+  </div>
+</section>
+
+<!-- POWER STATS -->
+<section class="power-stats" id="power">
+  <div class="power-stats-inner">
+    <img src="images/qve-site/malaysia_s_first_homegrow_d_1_5x-Dr6W2QTZ.webp" alt="Power" class="section-img-title" style="margin-bottom:0">
+    <div class="power-stats-grid">
+      <div class="stat-card">
+        <img src="images/qve-site/30min_icon-BI77ZxWF.svg" alt="Charging">
+        <div class="stat-value">30 mins</div>
+        <div class="stat-label">from 30% to 80% DC charging</div>
+      </div>
+      <div class="stat-card">
+        <svg width="50" height="52" viewBox="0 0 50 52" style="filter:brightness(0) invert(1);margin-bottom:16px"><path d="M17.57 37.765c-.179 0-.358-.057-.509-.17-.315-.235-.427-.655-.272-1.016l3.995-9.3h-3.928c-.349 0-.662-.214-.79-.538-.129-.324-.046-.694.208-.933L29.78 13.12c.282-.264.707-.306 1.035-.1.328.207.475.608.358.977l-2.89 9.13h4.858c.359 0 .678.224.8.561.121.337.019.714-.257.943L18.114 37.568c-.157.13-.35.196-.544.196zM19.004 25.578h3.071c.286 0 .553.144.71.383.158.238.184.54.071.803l-3.108 7.236 11.04-9.171h-3.665c-.27 0-.525-.13-.685-.348-.16-.219-.207-.5-.125-.76l2.256-7.127-9.565 8.984z" fill="#fff"/><circle cx="25" cy="25" r="23" fill="none" stroke="#fff" stroke-width="2"/></svg>
+        <div class="stat-value">7.5 seconds</div>
+        <div class="stat-label">0-100 km/h in Sport Mode</div>
+      </div>
+      <div class="stat-card">
+        <svg width="50" height="51" viewBox="0 0 50 51" style="filter:brightness(0) invert(1);margin-bottom:16px"><circle cx="25" cy="25" r="23" fill="none" stroke="#fff" stroke-width="2"/><path d="M32.376 17.653c-.304-.304-.8-.305-1.106.002l-4.684 4.692a3.08 3.08 0 00-1.566-.44 3.11 3.11 0 103.107 3.107c0-.571-.166-1.1-.436-1.56l4.687-4.695c.305-.305.305-.8-.002-1.106zm-7.356 8.905c-.851 0-1.544-.693-1.544-1.544 0-.85.693-1.543 1.544-1.543.853 0 1.543.698 1.543 1.543 0 .85-.693 1.544-1.543 1.544z" fill="#fff"/></svg>
+        <div class="stat-value">150 kW</div>
+        <div class="stat-label">Maximum power</div>
+      </div>
+      <div class="stat-card">
+        <img src="images/qve-site/km-h-icon-BinZwMUz.svg" alt="Range">
+        <div class="stat-value">445KM (NEDC)<br>370KM (WLTP)</div>
+        <div class="stat-label">Driving Range</div>
+      </div>
+    </div>
+    <p class="stat-note">* The declared range, charging time, and performance are estimated based on standard test procedures. Actual results may vary.</p>
+  </div>
+</section>
+
+<!-- EXTERIOR / INTERIOR -->
+<section class="showcase" id="showcase">
+  <div class="showcase-inner">
+    <img src="images/qve-site/see_it_title_1_5x-CMueOAvp.webp" alt="See It For Yourself" class="section-img-title" style="max-width:350px">
+    <div class="showcase-tabs">
+      <button class="showcase-tab active" id="tabExterior" onclick="switchTab('exterior')">EXTERIOR</button>
+      <button class="showcase-tab" id="tabInterior" onclick="switchTab('interior')">INTERIOR</button>
+    </div>
+    <div class="showcase-car-wrap" id="showcaseImage">
+      <img src="images/qve-site/car_colour_ice_blue_1_5x-Byb2kUFS.webp" alt="QV-E Exterior" id="carDisplay">
+    </div>
+    <div class="color-options" id="colorOptions">
+      <button class="color-btn active" onclick="switchColor('ice-blue')"><span class="color-dot dot-blue"></span>Ice Blue</button>
+      <button class="color-btn" onclick="switchColor('caviar-grey')"><span class="color-dot dot-grey"></span>Caviar Grey</button>
+    </div>
+  </div>
+</section>
+
+<!-- BOLD PRESENCE -->
+<section class="bold">
+  <div class="bold-inner">
+    <img src="images/qve-site/bold_presence_title_1_5x-Dajj1Aes.webp" alt="Bold Presence" class="section-img-title" style="max-width:500px">
+    <div class="bold-grid">
+      <div class="bold-item">
+        <img src="images/qve-site/combine_car_01_img_1_5x-Cbgp-qJ3.webp" alt="QV-E Front">
+        <div class="bold-item-content">
+          <h3>Commanding Front Fascia</h3>
+          <p>Sculpted aerodynamic lines with LED daytime running lights that make an unmistakable statement on the road.</p>
+        </div>
+      </div>
+      <div class="bold-item">
+        <img src="images/qve-site/combine_car_02_img_1_5x-DM3zo_WI.webp" alt="QV-E Profile">
+        <div class="bold-item-content">
+          <h3>Aerodynamic Silhouette</h3>
+          <p>Every curve engineered for efficiency. Flush door handles and sculpted side panels reduce drag for maximum range.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTUITIVE INTERIOR -->
+<section class="intuitive">
+  <div class="intuitive-inner">
+    <img src="images/qve-site/intuitive_title_d_1_5x-D15EwKPc.webp" alt="Intuitive Interior" class="section-img-title" style="max-width:300px">
+    <div class="intuitive-grid">
+      <div class="intuitive-card">
+        <img src="images/qve-site/car_01_2x-BMtWD3yZ.webp" alt="Dashboard">
+        <div class="intuitive-card-content">
+          <h4>Digital Cockpit</h4>
+          <p>Fully digital instrument cluster with real-time EV data — range, energy flow, and charging status at a glance.</p>
+        </div>
+      </div>
+      <div class="intuitive-card">
+        <img src="images/qve-site/car_02_2x-B6xYqURE.webp" alt="Seats">
+        <div class="intuitive-card-content">
+          <h4>Premium Cabin</h4>
+          <p>Sustainable leatherette seats with contrast stitching. Spacious interior designed for comfort on every journey.</p>
+        </div>
+      </div>
+    </div>
+    <div class="intuitive-bottom">
+      <div>
+        <h3>Drive smarter with P2 OneGo.</h3>
+        <p>Find charging stations, monitor your QV-E, and plan routes — all from your phone.</p>
+        <div class="app-btns">
+          <a href="#" style="display:inline-block"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Crect rx='8' fill='white' width='120' height='40'/%3E%3Ctext x='60' y='26' text-anchor='middle' font-family='Montserrat' font-size='12' font-weight='700' fill='%23000'%3EApp Store%3C/text%3E%3C/svg%3E" alt="App Store" style="height:40px"></a>
+          <a href="#" style="display:inline-block"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='135' height='40'%3E%3Crect rx='8' fill='white' width='135' height='40'/%3E%3Ctext x='68' y='26' text-anchor='middle' font-family='Montserrat' font-size='12' font-weight='700' fill='%23000'%3EGoogle Play%3C/text%3E%3C/svg%3E" alt="Google Play" style="height:40px"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVANCED PROTECTION -->
+<section class="protection" id="protection">
+  <div class="protection-inner">
+    <span class="section-label">ADVANCED PROTECTION</span>
+    <h2 style="font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:16px">Advanced Protection Features</h2>
+    <p class="protection-subtitle">Drive with confidence with features that keep everyone protected on every journey.</p>
+    <div class="protection-grid">
+      <figure class="protection-feature">
+        <div style="background:linear-gradient(135deg,#2a2050,#1a1040);padding:40px;text-align:center">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="38" stroke="#9688DA" stroke-width="2" stroke-dasharray="6 4"/><circle cx="40" cy="40" r="20" fill="none" stroke="#9688DA" stroke-width="1.5"/><path d="M40 20v40M20 40h40" stroke="#9688DA" stroke-width="1" opacity=".5"/></svg>
+        </div>
+        <figcaption>360° Auto Surround View Monitor</figcaption>
+      </figure>
+      <figure class="protection-feature">
+        <div style="background:linear-gradient(135deg,#2a2050,#1a1040);padding:40px;text-align:center">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="15" y="25" width="50" height="30" rx="4" stroke="#9688DA" stroke-width="2"/><circle cx="40" cy="40" r="8" fill="none" stroke="#7F6BE1" stroke-width="2"/><rect x="35" y="18" width="10" height="7" rx="2" fill="#9688DA"/></svg>
+        </div>
+        <figcaption>Driving Video Recorder & Emergency SOS Button</figcaption>
+      </figure>
+    </div>
+    <div class="safety-icons">
+      <div class="safety-item">
+        <div class="safety-icon">6</div>
+        <span>6 AIRBAGS</span>
+      </div>
+      <div class="safety-item">
+        <div class="safety-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9688DA" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <span>TPMS</span>
+      </div>
+      <div class="safety-item">
+        <div class="safety-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9688DA" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <span>CHILD PRESENCE DETECTION</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AFTER SALES -->
+<section class="after-sales">
+  <div class="after-sales-inner">
+    <span class="section-label" style="color:rgba(255,255,255,.6)">AFTER SALES & SUPPORT</span>
+    <h2>Complete Peace of Mind</h2>
+    <p>Every QV-E comes with comprehensive warranty and support.</p>
+    <div class="after-sales-grid">
+      <div class="after-sales-card">
+        <h4>8-Year Battery Warranty</h4>
+        <p>Minimum 70% State of Health guaranteed for 8 years or 160,000km — whichever comes first.</p>
+      </div>
+      <div class="after-sales-card">
+        <h4>24/7 Roadside Assist</h4>
+        <p>Round-the-clock support including towing to nearest Perodua EV outlet.</p>
+      </div>
+      <div class="after-sales-card">
+        <h4>Nationwide EV Outlets</h4>
+        <p>Growing network of certified Perodua EV service centres across Malaysia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <span class="section-label">PRICING</span>
+    <h2>Perodua QV-E Price List</h2>
+    <p class="pricing-sub">Peninsular Malaysia · Effective 15 June 2026 · Special Rebate RM6,500*</p>
+    <div class="pricing-grid">
+      <div class="pricing-card featured">
+        <div class="pricing-badge">BEST VALUE</div>
+        <h3>BaaS</h3>
+        <p style="font-size:11px;color:var(--text-muted);margin-bottom:8px">Battery-as-a-Service</p>
+        <div class="price">RM 63,499</div>
+        <div class="price-label">On-The-Road with Special Rebate</div>
+        <ul>
+          <li>Battery leasing plan — lower upfront cost</li>
+          <li>Unlimited mileage battery warranty</li>
+          <li>Min 70% SOH guaranteed</li>
+          <li>1-Year Road Tax: Exempted</li>
+          <li>Registration Fee: RM 300</li>
+          <li>EV JPJePlate: RM 98</li>
+          <li>Monthly from ~RM710 (9 years)</li>
+        </ul>
+        <a href="#cta" class="btn-primary" style="display:block;text-align:center">Book BaaS Now</a>
+      </div>
+      <div class="pricing-card">
+        <h3>Full Purchase</h3>
+        <p style="font-size:11px;color:var(--text-muted);margin-bottom:8px">Own the battery outright</p>
+        <div class="price">RM 93,999</div>
+        <div class="price-label">On-The-Road Price</div>
+        <ul>
+          <li>Full ownership — battery included</li>
+          <li>8 years / 160,000km warranty</li>
+          <li>Min 70% SOH guaranteed</li>
+          <li>1-Year Road Tax: Exempted</li>
+          <li>Registration Fee: RM 300</li>
+          <li>EV JPJePlate: RM 98</li>
+          <li>Monthly from ~RM1,144 (9 years)</li>
+        </ul>
+        <a href="#cta" class="btn-outline-white" style="display:block;text-align:center;font-weight:700">Book Full Purchase</a>
+      </div>
+    </div>
+    <p style="font-size:10px;color:var(--text-dim);margin-top:16px;text-align:center">* Special Rebate RM6,500 is for a limited time only. Terms & conditions apply. Prices subject to change without prior notice.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <h2>YOUR JOURNEY TO ELECTRIC STARTS HERE</h2>
+  <a href="https://wa.me/60149361401?text=Hi%20Nur-Fareena,%20saya%20berminat%20dengan%20Perodua%20QV-E.%20Boleh%20bagi%20info%20lanjut?" class="btn-outline-white" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+    WhatsApp Saya Sekarang
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 Perodua. All Rights Reserved.</p>
+  <div>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Product Disclaimer</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Terms of Sales</a>
+  </div>
+</footer>
+
+<script>
+function toggleMenu(){document.getElementById('hamburger').classList.toggle('active');document.getElementById('mobileMenu').classList.toggle('active')}
+
+let currentColor='ice-blue'
+function switchColor(color){
+  currentColor=color
+  document.querySelectorAll('.color-btn').forEach(b=>b.classList.remove('active'))
+  event.target.classList.add('active')
+  const img=document.getElementById('carDisplay')
+  if(color==='ice-blue') img.src='images/qve-site/car_colour_ice_blue_1_5x-Byb2kUFS.webp'
+  else img.src='images/qve-site/car_colour_ice_blue_1_5x-Byb2kUFS.webp' // Same image for now
+}
+function switchTab(tab){
+  document.getElementById('tabExterior').classList.toggle('active',tab==='exterior')
+  document.getElementById('tabInterior').classList.toggle('active',tab==='interior')
+  document.getElementById('colorOptions').style.display=tab==='exterior'?'flex':'none'
+}
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50)
+})
+</script>
+</body>
+</html>
